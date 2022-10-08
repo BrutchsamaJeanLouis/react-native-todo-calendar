@@ -5,7 +5,8 @@ const holidaySlice = createSlice({
   initialState: {
     data: [],
     editing: false,
-    viewing: false
+    viewing: false,
+    holidayViewing: {}
   },
   reducers: {
     setHolidays: (state, action) => {
@@ -16,9 +17,12 @@ const holidaySlice = createSlice({
     },
     setViewing: (state, action) => {
       state.viewing = action.payload
+    },
+    setHolidayViewing: (state, action) => {
+      state.holidayViewing = action.payload
     }
   }
 })
 
-export const { setHolidays, setEditing, setViewing } = holidaySlice.actions
+export const { setHolidays, setEditing, setViewing, setHolidayViewing } = holidaySlice.actions
 export default holidaySlice.reducer

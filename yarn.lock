@@ -1599,6 +1599,11 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
+"@react-native-community/checkbox@^0.5.12":
+  version "0.5.12"
+  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.12.tgz#1f55a38bbcd5f10ca853db0c6a9f1c4beccc37af"
+  integrity sha512-Dd3eiAW7AkpRgndwKGdgQ6nNgEmZlVD8+KAOBqwjuZQ/M67BThXJ9Ni+ydpPjNm4e28KXmIILfkvhcDt0ZoFTQ==
+
 "@react-native-community/cli-clean@^8.0.4":
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-clean/-/cli-clean-8.0.4.tgz#97e16a20e207b95de12e29b03816e8f2b2c80cc7"
@@ -1768,6 +1773,18 @@
     minimist "^1.2.0"
     prompts "^2.4.0"
     semver "^6.3.0"
+
+"@react-native-community/datetimepicker@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-6.2.0.tgz#50bc629e70e4030c48205c01efbc65a8f35d82d4"
+  integrity sha512-w1ZS+wYO3qSASliRp+B7mPphOhtVm++rhSbj1WsgXdgLgDXSkDxpMnAXXQu9M0XdcgBwVJ6wDExeIwuzU5Jtfg==
+  dependencies:
+    invariant "^2.2.4"
+
+"@react-native-picker/picker@^2.4.6":
+  version "2.4.6"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.6.tgz#a6f804c41ca2a0bb52f1d04402e2fb76b5074e78"
+  integrity sha512-TyrQZKwi7tbGbETxpQpaf0Jld6Fw/RRWVPAShRobTUWwUglveP71mtdLwuNJV+1NXI6PqW/OvCEk9ZmFfGj0fQ==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -4691,6 +4708,11 @@ expo-asset@~8.6.1:
     md5-file "^3.2.3"
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
+
+expo-checkbox@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/expo-checkbox/-/expo-checkbox-2.2.0.tgz#3941715ce4c13858b43719c64a7287484e6dc614"
+  integrity sha512-vuLVnQS1UqzjKod/obfAC3XmozEDw1N338xKel1BqB/AclgpQVxCVhyPJRNsT3kScwrjNb4UXn3H0qJneTX/fg==
 
 expo-constants@~13.2.2, expo-constants@~13.2.4:
   version "13.2.4"

@@ -9,11 +9,12 @@ import { prepareSixMonthHolidays } from './utils/prepare-holidays'
 import dummyJson from './holidays.json'
 import { setHolidays } from './redux/reducers/holidays'
 import LoadingSpinner from './components/LoadingSpinner'
+import HolidayView from './views/HolidayView'
 
 const Index = () => {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
-  // const viewing = useSelector(root => root.holidays.viewing)
+  const viewing = useSelector(root => root.holidays.viewing)
   useEffect(() => {
     fetchHolidays()
   }, [])
@@ -43,7 +44,7 @@ const Index = () => {
       <StatusBar style='auto' />
       <AppBar />
       <ScrollView nestedScrollEnabled>
-        <HolidayList />
+        {!viewing ? <HolidayList /> : <HolidayView />}
       </ScrollView>
     </SafeAreaView>
   )

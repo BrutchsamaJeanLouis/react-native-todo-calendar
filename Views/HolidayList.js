@@ -19,7 +19,6 @@ export default function HolidayList () {
 
   return (
     <View style={styles.container}>
-      {/* {console.log(holidays['england-and-wales'].events)} */}
       <FlatList
         style={styles.list}
         data={holidays}
