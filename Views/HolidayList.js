@@ -1,38 +1,44 @@
-import { View, Text, SafeAreaView, StyleSheet, FlatList } from 'react-native'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { StatusBar } from 'expo-status-bar';
-import { styleConstants } from '../constants/style-const';
-import AppBar from '../components/AppBar';
+import { View, Text, SafeAreaView, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
+import React, { useEffect, useId, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { styleConstants } from '../constants/style-const'
+import AppBar from '../components/AppBar'
+import axios from 'axios'
+import { setHolidays } from '../redux/reducers/holidays'
+import dummyJson from '../holidays.json'
+import { prepareSixMonthHolidays } from '../utils/prepare-holidays'
+import LoadingSpinner from '../components/LoadingSpinner'
+import HolidayCard from '../components/HolidayCard'
 
-export default function HolidayList() {
-  const holidays = useSelector((root) => root.holidays)
-  console.log(holidays)
+// TODO Filter holidays for 5 and get the using dayJS
+export default function HolidayList () {
+  const holidayId = useId()
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  const holidays = useSelector((root) => root.holidays.data)
 
   return (
-    <SafeAreaView>
-      <StatusBar style="auto" />
-      <View style={styles.titleContainer}>
-        <AppBar />
-        {/* <Text style={styles.title}>UK Holiday Days</Text> */}
-        <FlatList
-        />
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      {/* {console.log(holidays['england-and-wales'].events)} */}
+      <FlatList
+        style={styles.list}
+        data={holidays}
+        renderItem={(hol) => <HolidayCard holiday={hol.item} />}
+        key={holidayId}
+      />
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    height: '100%'
   },
-  titleContainer:{
-    backgroundColor: styleConstants.BACKGROUNDCOLOR,
-    height: 50
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    padding: 5
+  list: {
+    flex: 1,
+    height: '100%',
+    minWidth: '100%',
+    overflow: 'scroll'
   }
-});
+})

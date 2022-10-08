@@ -1,3 +1,4 @@
 export const styleConstants = {
-  BACKGROUNDCOLOR: '#5386e5',
+  BACKGROUNDCOLOR: '#b9d2ff',
+  PRIMARY: '#b9d2ff'
 }

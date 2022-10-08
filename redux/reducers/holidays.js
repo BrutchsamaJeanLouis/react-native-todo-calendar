@@ -1,16 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 const holidaySlice = createSlice({
-  name: "holidays",
+  name: 'holidays',
   initialState: {
-    data: {}
+    data: [],
+    editing: false,
+    viewing: false
   },
   reducers: {
     setHolidays: (state, action) => {
       state.data = action.payload
+    },
+    setEditing: (state, action) => {
+      state.editing = action.payload
+    },
+    setViewing: (state, action) => {
+      state.viewing = action.payload
     }
   }
 })
 
-export const { setHolidays } = holidaySlice.actions
+export const { setHolidays, setEditing, setViewing } = holidaySlice.actions
 export default holidaySlice.reducer
