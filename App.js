@@ -1,3 +1,4 @@
+import React from 'react'
 import {StyleSheet, Text, View } from 'react-native'
 import { Provider as StoreProvider, useSelector } from 'react-redux'
 import { Provider as PaperProvider } from 'react-native-paper'

@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from 'expo-checkbox';
-import AsyncStorage from '@react-native-async-storage/async-storage'
+// import AsyncStorage from '@react-native-async-storage/async-storage'
 import { saveHoliday } from '../redux/reducers/holidays'
 
 const countriesEnum = ['England', ' Wales', ' Scotland', ' Northern ireland']
@@ -56,7 +56,7 @@ const HolidayView = () => {
 
     // setting a date in key to reset Data everyNew Day
     const key = `ukBankHolidayData-${dayjs().format('YYYY-MM-DD')}`
-    await AsyncStorage.setItem(key, JSON.stringify(holidayState))
+    // await AsyncStorage.setItem(key, JSON.stringify(holidayState))
     setEditing(false)
   }
 
