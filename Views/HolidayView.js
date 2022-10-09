@@ -1,5 +1,5 @@
 import { DatePickerAndroid, FlatList, StyleSheet, Text, View } from 'react-native'
-import { TextInput, IconButton } from 'react-native-paper'
+import { TextInput, IconButton, Button } from 'react-native-paper'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
@@ -40,18 +40,28 @@ const HolidayView = () => {
     }
   }
 
+  const completeChanges = () => {
+    setEditing(false)
+  }
+
   return (
-    <View style={{ flex: 1 }}>
-      <TextInput
-        style={{ fontWeight: 'bold', fontSize: 20, backgroundColor: 'white' }}
-        value={title}
-        mode='flat'
-        underlineColor='white'
-        activeUnderlineColor='white'
-        onChangeText={text => setTitle(text)}
-        right={<TextInput.Icon icon='pencil' onPress={() => setEditing(!editing)} />}
-        editable={editing}
-      />
+    <View style={{ flex: 1, height: '100%' }}>
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <TextInput
+          style={{ fontWeight: 'bold', fontSize: 20, backgroundColor: 'white', width: '90%' }}
+          value={title}
+          mode='flat'
+          underlineColor='white'
+          activeUnderlineColor='white'
+          onChangeText={text => setTitle(text)}
+          editable={editing}
+        />
+        {!editing ? <IconButton
+          style={{ alignSelf: 'flex-end' }}
+          icon='pencil'
+          onPress={() => {setEditing(true)}}
+        /> : <Button mode='contained' onPress={() => completeChanges()}>Done</Button>}
+      </View>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <IconButton
           icon='calendar-month'
