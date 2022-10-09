@@ -51,7 +51,9 @@ export const rebuildWithoutDuplicates = (englandAndWales, scotland, northernIrel
 export const compareHolidays = (a, b) => {
   if (dayjs(a.date).isBefore(b.date)) {
     return -1
-  } else {
+  }
+  if (dayjs(b.date).isBefore(a.date)) {
     return 1
   }
+  return 0
 }

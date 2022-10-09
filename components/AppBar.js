@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Appbar, useTheme } from 'react-native-paper'
+import { Appbar } from 'react-native-paper'
 import { StyleSheet } from 'react-native'
 import { setHolidayViewing, setViewing, setViewingIndex } from '../redux/reducers/holidays'
 
 export const AppBar = () => {
   const dispatch = useDispatch()
-  const { colors } = useTheme()
   const viewing = useSelector(root => root.holidays.viewing)
 
   const goBack = () => {
