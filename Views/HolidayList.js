@@ -14,7 +14,6 @@ import HolidayCard from '../components/HolidayCard'
 export default function HolidayList () {
   const holidayId = useId()
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true)
   const holidays = useSelector((root) => root.holidays.data)
 
   return (
@@ -22,7 +21,7 @@ export default function HolidayList () {
       <FlatList
         style={styles.list}
         data={holidays}
-        renderItem={(hol) => <HolidayCard holiday={hol.item} />}
+        renderItem={(hol) => <HolidayCard holiday={hol.item} index={hol.index} />}
         key={holidayId}
       />
     </View>

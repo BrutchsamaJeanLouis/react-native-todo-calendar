@@ -16,10 +16,10 @@ export const prepareSixMonthHolidays = (holidays) => {
 }
 
 // since the three areas will remain a constant we can take in 3 params
-const rebuildWithoutDuplicates = (englandAndWales, scotland, northernIreland) => {
+export const rebuildWithoutDuplicates = (englandAndWales, scotland, northernIreland) => {
   // result need some predefined dataset to compare
   // adding england and wales along with extra key to track country occurrences
-  const result = [...englandAndWales.map(hol => ({ ...hol, countries: ['England', ' Wales'] }))]
+  const result = [...englandAndWales.map(hol => ({ ...hol, countries: [' England', ' Wales'] }))]
 
   scotland.forEach(hol => {
     // its ok to use find from here on since there will never be duplicates in result
@@ -40,11 +40,15 @@ const rebuildWithoutDuplicates = (englandAndWales, scotland, northernIreland) =>
     }
   })
 
-  result.sort(compare)
-  return result
+  // sort the concatenation of holidays
+  result.sort(compareHolidays)
+
+  // limit to 5 results
+  const shrink = result.slice(0, 5)
+  return shrink
 }
 
-const compare = (a, b) => {
+export const compareHolidays = (a, b) => {
   if (dayjs(a.date).isBefore(b.date)) {
     return -1
   } else {

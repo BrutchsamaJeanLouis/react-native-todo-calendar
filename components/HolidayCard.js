@@ -1,25 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { Card, Avatar, IconButton } from 'react-native-paper'
+import { Card, Avatar, IconButton,Divider } from 'react-native-paper'
 import { useDispatch } from 'react-redux'
 import React from 'react'
 import dayjs from 'dayjs'
-import { setViewing, setHolidayViewing} from '../redux/reducers/holidays'
+import { setViewing, setHolidayViewing, setViewingIndex} from '../redux/reducers/holidays'
 const advancedFormat = require('dayjs/plugin/advancedFormat')
 dayjs.extend(advancedFormat)
 
-const HolidayCard = ({ holiday }) => {
+const HolidayCard = ({ holiday, index }) => {
   const dispatch = useDispatch()
-  // const day = dayjs(holiday.date).get('date')
-  const day = dayjs(holiday.date).format('Do')
+  // with suffix const day = dayjs(holiday.date).format('Do')
+  const day = dayjs(holiday.date).format('DD')
   const month = dayjs(holiday.date).format('MMM')
 
   const viewHoliday = () => {
     dispatch(setHolidayViewing(holiday))
+    dispatch(setViewingIndex(index))
     dispatch(setViewing(true))
   }
 
   return (
-    <Card onPress={() => viewHoliday()}>
+    <Card onPress={() => viewHoliday()} elevation={0}>
       <Card.Title
         style={{ backgroundColor: 'white' }}
         titleStyle={{ color: '#ed4731' }}
@@ -30,10 +31,10 @@ const HolidayCard = ({ holiday }) => {
         left={(props) => (
           <View>
             <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{day} {month}</Text>
-            {/* <Text>{month}</Text> */}
           </View>
         )}
       />
+      <Divider />
     </Card>
   )
 }

@@ -6,26 +6,31 @@ import dayjs from 'dayjs'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from 'expo-checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { saveHoliday } from '../redux/reducers/holidays'
 
 const countriesEnum = ['England', ' Wales', ' Scotland', ' Northern ireland']
 
 const HolidayView = () => {
+  const dispatch = useDispatch()
   const holidayViewing = useSelector(root => root.holidays.holidayViewing)
+  const holidayState = useSelector(root => root.holidays.data)
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(holidayViewing.title)
   const [date, setDate] = useState(holidayViewing.date)
   const [notes, setNotes] = useState(holidayViewing.notes)
   const [countries, setCountries] = useState(holidayViewing.countries)
   const [showDateModal, setShowDateModal] = useState(false)
-  const [selectedCountry, setSelectedCountry] = useState()
 
   const changeDate = (date) => {
     setShowDateModal(false)
-    setDate(date.toISOString())
+    const dateFormat = dayjs(date.toISOString()).format('YYYY-MM-DD')
+    setDate(dateFormat)
     console.log('change date', date.toISOString())
   }
 
   const changeCountry = (country, bool) => {
+    if (!editing) return
     // adding
     if (bool === true) {
       const newCountries = [...countries, country]
@@ -40,59 +45,77 @@ const HolidayView = () => {
     }
   }
 
-  const completeChanges = () => {
+  const completeChanges = async () => {
+    dispatch(saveHoliday({
+      ...holidayViewing,
+      title,
+      date,
+      notes,
+      countries
+    }))
+
+    // setting a date in key to reset Data everyNew Day
+    const key = `ukBankHolidayData-${dayjs().format('YYYY-MM-DD')}`
+    await AsyncStorage.setItem(key, JSON.stringify(holidayState))
     setEditing(false)
   }
 
   return (
     <View style={{ flex: 1, height: '100%' }}>
-      <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
         <TextInput
-          style={{ fontWeight: 'bold', fontSize: 20, backgroundColor: 'white', width: '90%' }}
+          style={{ fontWeight: 'bold', fontSize: 20, backgroundColor: 'white', width: '70%' }}
           value={title}
           mode='flat'
           underlineColor='white'
-          activeUnderlineColor='white'
+          activeUnderlineColor={editing ?'#eeeeee' :'white'}
           onChangeText={text => setTitle(text)}
           editable={editing}
         />
         {!editing ? <IconButton
-          style={{ alignSelf: 'flex-end' }}
+          style={{ alignSelf: 'flex-end', marginLeft: 50 }}
           icon='pencil'
           onPress={() => {setEditing(true)}}
-        /> : <Button mode='contained' onPress={() => completeChanges()}>Done</Button>}
+        /> : <Button mode='contained' style={{ alignSelf: 'flex-end', backgroundColor: '#e88258',textColor: 'black', marginLeft: 20}} 
+        onPress={() => completeChanges()}>Done</Button>}
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <IconButton
+      <View style={{ flexDirection: 'row', alignItems: 'center', maxHeight: 50 }}>
+        <Button
+          style={{ marginLeft: 10 }}
           icon='calendar-month'
-          size={20}
+          mode='text'
           onPress={() => setShowDateModal(true)}
+          textColor='#e88258'
           disabled={!editing}
-        />
-        <Text>{date}</Text>
+        >
+          {date}
+        </Button>
       </View>
       {showDateModal && <DateTimePicker
-        style={{ flex: 1 }}
+        style={{ flex: 1, marginRight: 253, maxHeight: 50 }}
         mode='date'
         value={new Date(date)}
         onChange={(event, date) => { changeDate(date) }}
         dateFormat='day month year'
       />}
+      <Text style={{ marginLeft: 15, fontSize: 17, marginTop: 20, fontWeight: 'bold' }}>Notes</Text>
       <TextInput
         style={{ backgroundColor: 'white', height: 60 }}
         value={notes}
-        placeholder='Enter Your notes here'
+        placeholder='Enter your notes here'
         mode='flat'
         underlineColor='white'
-        activeUnderlineColor='white'
+        activeUnderlineColor={editing ?'#ebe8e8' :'white'}
         onChangeText={text => setNotes(text)}
+        editable={editing}
       />
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <Text style={{ margin: 15, fontSize: 14, fontWeight: 'bold' }}>Location</Text>
+      <View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+        <Text style={{ margin: 15, fontSize: 17, fontWeight: 'bold' }}>Location</Text>
       </View>
       {countriesEnum.map((countryName, i) => (
-        <View key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 15 }}>
+        <View key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 15, maxHeight: 50 }}>
           <CheckBox
+            color='#e88258'
             disabled={false}
             value={countries.includes(countryName)}
             onValueChange={(newValue) => changeCountry(countryName, newValue)}

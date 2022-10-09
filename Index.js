@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
@@ -40,13 +40,13 @@ const Index = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style='auto' />
       <AppBar />
-      <ScrollView nestedScrollEnabled>
+      <SafeAreaView style={{ flex: 1 }}>
         {!viewing ? <HolidayList /> : <HolidayView />}
-      </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   )
 }
 
