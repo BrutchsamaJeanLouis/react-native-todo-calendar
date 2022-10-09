@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import modeConst from '../../constants/mode-const'
 import { compareHolidays } from '../../utils/prepare-holidays'
 
 const holidaySlice = createSlice({
@@ -8,7 +9,8 @@ const holidaySlice = createSlice({
     editing: false,
     viewing: false,
     viewingIndex: null,
-    holidayViewing: {}
+    holidayViewing: {},
+    mode: modeConst.FETCH
   },
   reducers: {
     setHolidays: (state, action) => {
@@ -30,6 +32,13 @@ const holidaySlice = createSlice({
       state.data[state.viewingIndex] = action.payload
       // need to resort incase the date was modified
       state.data.sort(compareHolidays)
+    },
+    toggleAppMode: (state) => {
+      if (state.mode === modeConst.FETCH) {
+        state.mode = modeConst.SAVED
+      } else {
+        state.mode = modeConst.FETCH
+      }
     }
   }
 })
@@ -40,7 +49,8 @@ export const {
   setViewing,
   setHolidayViewing,
   setViewingIndex,
-  saveHoliday
+  saveHoliday,
+  toggleAppMode
 } = holidaySlice.actions
 
 export default holidaySlice.reducer

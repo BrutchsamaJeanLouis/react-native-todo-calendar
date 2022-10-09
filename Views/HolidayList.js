@@ -18,6 +18,10 @@ export default function HolidayList () {
 
   return (
     <View style={styles.container}>
+      {!holidays &&
+        <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 30 }}>
+          Sorry no holidays to display
+        </Text>}
       <FlatList
         style={styles.list}
         data={holidays}

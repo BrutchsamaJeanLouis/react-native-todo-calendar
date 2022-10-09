@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { Card, Avatar, IconButton,Divider } from 'react-native-paper'
+// import Swipeable from 'react-native-swipeable'
 import { useDispatch } from 'react-redux'
 import React from 'react'
 import dayjs from 'dayjs'
@@ -20,22 +21,24 @@ const HolidayCard = ({ holiday, index }) => {
   }
 
   return (
-    <Card onPress={() => viewHoliday()} elevation={0}>
-      <Card.Title
-        style={{ backgroundColor: 'white' }}
-        titleStyle={{ color: '#ed4731' }}
-        subtitleStyle={{ fontSize: 12, fontStyle: 'italic' }}
-        title={holiday.title}
-        leftStyle={{ width: 60, justifyContent: 'flex-start' }}
-        subtitle={holiday.countries.toString()}
-        left={(props) => (
-          <View>
-            <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{day} {month}</Text>
-          </View>
-        )}
-      />
-      <Divider />
-    </Card>
+    // <Swipeable onLeftActionRelease={() => console.log('swiped')}>
+      <Card onPress={() => viewHoliday()} elevation={0}>
+        <Card.Title
+          style={{ backgroundColor: 'white' }}
+          titleStyle={{ color: '#ed4731' }}
+          subtitleStyle={{ fontSize: 12, fontStyle: 'italic' }}
+          title={holiday.title}
+          leftStyle={{ width: 60, justifyContent: 'flex-start' }}
+          subtitle={holiday.countries.toString()}
+          left={(props) => (
+            <View>
+              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{day} {month}</Text>
+            </View>
+          )}
+        />
+        <Divider />
+      </Card>
+    // </Swipeable>
   )
 }
 

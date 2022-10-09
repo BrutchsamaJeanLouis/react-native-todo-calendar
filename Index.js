@@ -10,27 +10,45 @@ import dummyJson from './holidays.json'
 import { setHolidays } from './redux/reducers/holidays'
 import LoadingSpinner from './components/LoadingSpinner'
 import HolidayView from './views/HolidayView'
+import modeConst from './constants/mode-const'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Index = () => {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
   const viewing = useSelector(root => root.holidays.viewing)
+  const mode = useSelector(root => root.holidays.mode)
   useEffect(() => {
     fetchHolidays()
   }, [])
 
-  const fetchHolidays = async () => {
-    const response = await axios.get('https://www.gov.uk/bank-holidays.json')
-      .catch((err) => {
-        console.log(err)
-        /** Handle Error Here with message */
-      })
+  // on Mode Toggle fetch data again
+  useEffect(() => {
+    fetchHolidays()
+  }, [mode])
 
-    if (response?.data) {
-      // TODO don't want to reach API request limit will use local JSON For now
-      // const result = prepareSixMonthHolidays(response.data)
-      const result = prepareSixMonthHolidays(dummyJson)
-      dispatch(setHolidays(result))
+  const fetchHolidays = async () => {
+    if (mode === modeConst.FETCH) {
+      const response = await axios.get('https://www.gov.uk/bank-holidays.json')
+        .catch((err) => {
+          console.log(err)
+          /** Handle Error Here with message */
+        })
+
+      if (response?.data) {
+        // TODO don't want to reach API request limit will use local JSON For now
+        // const result = prepareSixMonthHolidays(response.data)
+        const result = prepareSixMonthHolidays(dummyJson)
+        dispatch(setHolidays(result))
+      }
+    } else {
+      await AsyncStorage.getItem('ukBankHolidayData')
+        .then(data => {
+          const savedData = JSON.parse(data)
+          console.log('Loading Saved Data', savedData)
+          dispatch(setHolidays(savedData))
+        })
+        .catch(err => console.log(err))
     }
     setLoading(false)
   }

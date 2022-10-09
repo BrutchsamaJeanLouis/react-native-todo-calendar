@@ -6,8 +6,9 @@ import dayjs from 'dayjs'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { Picker } from '@react-native-picker/picker';
 import CheckBox from 'expo-checkbox';
-// import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { saveHoliday } from '../redux/reducers/holidays'
+import modeConst from '../constants/mode-const'
 
 const countriesEnum = ['England', ' Wales', ' Scotland', ' Northern ireland']
 
@@ -15,6 +16,8 @@ const HolidayView = () => {
   const dispatch = useDispatch()
   const holidayViewing = useSelector(root => root.holidays.holidayViewing)
   const holidayState = useSelector(root => root.holidays.data)
+  const viewingIndex = useSelector(root => root.holidays.viewingIndex)
+  const mode = useSelector(root => root.holidays.mode)
   const [editing, setEditing] = useState(false)
   const [title, setTitle] = useState(holidayViewing.title)
   const [date, setDate] = useState(holidayViewing.date)
@@ -54,9 +57,32 @@ const HolidayView = () => {
       countries
     }))
 
-    // setting a date in key to reset Data everyNew Day
-    const key = `ukBankHolidayData-${dayjs().format('YYYY-MM-DD')}`
-    // await AsyncStorage.setItem(key, JSON.stringify(holidayState))
+    // build a new holidaysState to save (redux state not updating in time)
+    
+
+    let newData = []
+    // fetch prev saved Data
+    await AsyncStorage.getItem('ukBankHolidayData')
+      .then(data => {
+        if (data) {
+          // editing personal notes so modify index instead of creating new entry
+          if (mode === modeConst.SAVED) {
+            const savedData = [...holidayState]
+            savedData[viewingIndex] = { ...holidayViewing, title, date, notes, countries }
+            newData = savedData
+          } else {
+            const savedData = JSON.parse(data)
+            // combine prev saved with editing data
+            newData = [...savedData, { ...holidayViewing, title, date, notes, countries }]
+          }
+        } else {
+          // no notes just add first  one
+          newData.push({ ...holidayViewing, title, date, notes, countries })
+        }
+      })
+      .catch(err => console.log(err))
+    // update storage
+    await AsyncStorage.setItem('ukBankHolidayData', JSON.stringify(newData))
     setEditing(false)
   }
 
