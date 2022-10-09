@@ -26,10 +26,12 @@ export const AppBar = () => {
       {!viewing && <Appbar.Action icon='view-list' onPress={() => switchModes()} /> }
       {viewing && <Appbar.BackAction color='white' onPress={() => goBack()} />}
       <Appbar.Content color='white' titleStyle={{ textAlign: 'center', fontSize: 19, fontWeight: 'bold' }} title={headerTitle} />
+      <Appbar.Action />
     </Appbar.Header>
   )
 }
 
+// TODO Refactor and classify styles here
 const style = StyleSheet.create({
   appBar: {
   }

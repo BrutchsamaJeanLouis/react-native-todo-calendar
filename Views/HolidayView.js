@@ -155,4 +155,5 @@ const HolidayView = () => {
 
 export default HolidayView
 
+// TODO Refactor and classify styles here
 const styles = StyleSheet.create({})
