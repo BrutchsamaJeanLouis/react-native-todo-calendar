@@ -17,5 +17,5 @@
 - Global State Manager
 - Themes and Components from React Native Paper
 
-## known issues
+## Known issues
 Native OS components (datePicker etc) not working on web browser (need to handle an implementation for this) 
