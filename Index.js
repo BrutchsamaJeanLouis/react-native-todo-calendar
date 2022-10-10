@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { StatusBar } from 'expo-status-bar'
@@ -6,7 +6,6 @@ import HolidayList from './views/HolidayList'
 import AppBar from './components/AppBar'
 import axios from 'axios'
 import { prepareSixMonthHolidays } from './utils/prepare-holidays'
-import dummyJson from './holidays.json'
 import { setHolidays } from './redux/reducers/holidays'
 import LoadingSpinner from './components/LoadingSpinner'
 import HolidayView from './views/HolidayView'
@@ -36,9 +35,7 @@ const Index = () => {
         })
 
       if (response?.data) {
-        // TODO don't want to reach API request limit will use local JSON For now
-        // const result = prepareSixMonthHolidays(response.data)
-        const result = prepareSixMonthHolidays(dummyJson)
+        const result = prepareSixMonthHolidays(response.data)
         dispatch(setHolidays(result))
       }
     } else {

@@ -22,18 +22,23 @@ export const AppBar = () => {
   }
 
   return (
-    <Appbar.Header style={{ backgroundColor: '#ed4731' }}>
-      {!viewing && <Appbar.Action icon='view-list' onPress={() => switchModes()} /> }
+    <Appbar.Header style={style.appBarHeader}>
+      {!viewing && <Appbar.Action icon='view-list' color='white' onPress={() => switchModes()} />}
       {viewing && <Appbar.BackAction color='white' onPress={() => goBack()} />}
-      <Appbar.Content color='white' titleStyle={{ textAlign: 'center', fontSize: 19, fontWeight: 'bold' }} title={headerTitle} />
+      <Appbar.Content color='white' titleStyle={style.titleStyles} title={headerTitle} />
       <Appbar.Action />
     </Appbar.Header>
   )
 }
 
-// TODO Refactor and classify styles here
 const style = StyleSheet.create({
-  appBar: {
+  appBarHeader: {
+    backgroundColor: '#ed4731'
+  },
+  titleStyles: {
+    textAlign: 'center',
+    fontSize: 19,
+    fontWeight: 'bold'
   }
 })
 

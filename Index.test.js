@@ -4,7 +4,6 @@ import Index from './Index'
 import { Provider } from 'react-redux'
 import { store } from './redux/store'
 
-
 describe('<App />', () => {
   // it('has 1 child', () => {
   //   const tree = renderer.create(<AppBar />).toJSON()

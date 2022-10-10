@@ -1,12 +1,12 @@
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
-import { Card, Avatar, IconButton,Divider } from 'react-native-paper'
-import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
+import { StyleSheet, Text, View } from 'react-native'
+import { Card, IconButton, Divider } from 'react-native-paper'
+import GestureRecognizer from 'react-native-swipe-gestures'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useDispatch, useSelector } from 'react-redux'
 import React from 'react'
 import dayjs from 'dayjs'
-import { setViewing, setHolidayViewing, setViewingIndex, setHolidays} from '../redux/reducers/holidays'
-import modeConst from '../constants/mode-const';
+import { setViewing, setHolidayViewing, setViewingIndex, setHolidays } from '../redux/reducers/holidays'
+import modeConst from '../constants/mode-const'
 const advancedFormat = require('dayjs/plugin/advancedFormat')
 dayjs.extend(advancedFormat)
 
@@ -39,15 +39,15 @@ const HolidayCard = ({ holiday, index }) => {
     <GestureRecognizer onSwipeLeft={deleteCard} onSwipeRight={deleteCard}>
       <Card onPress={() => viewHoliday()} elevation={0}>
         <Card.Title
-          style={{ backgroundColor: 'white' }}
-          titleStyle={{ color: '#ed4731' }}
-          subtitleStyle={{ fontSize: 12, fontStyle: 'italic' }}
+          style={styles.cardTitle}
+          titleStyle={styles.titleStyles}
+          subtitleStyle={styles.subtitleStyles}
           title={holiday.title}
-          leftStyle={{ width: 60, justifyContent: 'flex-start' }}
+          leftStyle={styles.leftStyles}
           subtitle={holiday.countries.toString()}
           left={(props) => (
             <View>
-              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>{day} {month}</Text>
+              <Text style={styles.titleStyles}>{day} {month}</Text>
             </View>
           )}
           right={(props) => {
@@ -61,7 +61,26 @@ const HolidayCard = ({ holiday, index }) => {
     </GestureRecognizer>
   )
 }
-// TODO Refactor and classify styles here
-const styles = StyleSheet.create({})
+
+const styles = StyleSheet.create({
+  cardTitle: {
+    backgroundColor: 'white'
+  },
+  titleStyles: {
+    color: '#ed4731'
+  },
+  subtitleStyles: {
+    fontSize: 12,
+    fontStyle: 'italic'
+  },
+  leftStyles: {
+    width: 60,
+    justifyContent: 'flex-start'
+  },
+  textStyles: {
+    fontSize: 13,
+    fontWeight: 'bold'
+  }
+})
 
 export default HolidayCard

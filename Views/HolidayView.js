@@ -1,11 +1,10 @@
-import { DatePickerAndroid, FlatList, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { TextInput, IconButton, Button } from 'react-native-paper'
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { Picker } from '@react-native-picker/picker';
-import CheckBox from 'expo-checkbox';
+import CheckBox from 'expo-checkbox'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { saveHoliday } from '../redux/reducers/holidays'
 import modeConst from '../constants/mode-const'
@@ -58,7 +57,6 @@ const HolidayView = () => {
     }))
 
     // build a new holidaysState to save (redux state not updating in time)
-    
 
     let newData = []
     // fetch prev saved Data
@@ -87,25 +85,32 @@ const HolidayView = () => {
   }
 
   return (
-    <View style={{ flex: 1, height: '100%' }}>
-      <View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
         <TextInput
-          style={{ fontWeight: 'bold', fontSize: 20, backgroundColor: 'white', width: '70%' }}
+          style={styles.title}
           value={title}
           mode='flat'
           underlineColor='white'
-          activeUnderlineColor={editing ?'#eeeeee' :'white'}
+          activeUnderlineColor={editing ? '#eeeeee' : 'white'}
           onChangeText={text => setTitle(text)}
           editable={editing}
         />
-        {!editing ? <IconButton
-          style={{ alignSelf: 'flex-end', marginLeft: 50 }}
-          icon='pencil'
-          onPress={() => {setEditing(true)}}
-        /> : <Button mode='contained' style={{ alignSelf: 'flex-end', backgroundColor: '#e88258',textColor: 'black', marginLeft: 20}} 
-        onPress={() => completeChanges()}>Done</Button>}
+        {!editing
+          ? <IconButton
+              style={styles.editButton}
+              icon='pencil-box-multiple'
+              onPress={() => { setEditing(true) }}
+            />
+          : <Button
+              mode='contained'
+              style={styles.saveButton}
+              onPress={() => completeChanges()}
+            >
+            Save
+          </Button>}
       </View>
-      <View style={{ flexDirection: 'row', alignItems: 'center', maxHeight: 50 }}>
+      <View style={styles.datePickerWrapper}>
         <Button
           style={{ marginLeft: 10 }}
           icon='calendar-month'
@@ -118,28 +123,28 @@ const HolidayView = () => {
         </Button>
       </View>
       {showDateModal && <DateTimePicker
-        style={{ flex: 1, marginRight: 253, maxHeight: 50 }}
+        style={styles.datePickerModal}
         mode='date'
         value={new Date(date)}
         onChange={(event, date) => { changeDate(date) }}
         dateFormat='day month year'
       />}
-      <Text style={{ marginLeft: 15, fontSize: 17, marginTop: 20, fontWeight: 'bold' }}>Notes</Text>
+      <Text style={styles.notesLabel}>Notes</Text>
       <TextInput
-        style={{ backgroundColor: 'white', height: 60 }}
+        style={styles.notesInput}
         value={notes}
         placeholder='Enter your notes here'
         mode='flat'
         underlineColor='white'
-        activeUnderlineColor={editing ?'#ebe8e8' :'white'}
+        activeUnderlineColor={editing ? '#ebe8e8' : 'white'}
         onChangeText={text => setNotes(text)}
         editable={editing}
       />
-      <View style={{ flex: 1, flexDirection: 'row', maxHeight: 50 }}>
-        <Text style={{ margin: 15, fontSize: 17, fontWeight: 'bold' }}>Location</Text>
+      <View style={styles.locationTitleWrapper}>
+        <Text style={styles.locationTitle}>Location</Text>
       </View>
       {countriesEnum.map((countryName, i) => (
-        <View key={i} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginLeft: 15, maxHeight: 50 }}>
+        <View key={i} style={styles.checkBoxWrapper}>
           <CheckBox
             color='#e88258'
             disabled={false}
@@ -155,5 +160,56 @@ const HolidayView = () => {
 
 export default HolidayView
 
-// TODO Refactor and classify styles here
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    height: '100%'
+  },
+  titleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    maxHeight: 50
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    backgroundColor: 'white',
+    width: '70%'
+  },
+  editButton: {
+    alignSelf: 'flex-end',
+    marginLeft: 50
+  },
+  saveButton: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#e88258',
+    textColor: 'black',
+    marginLeft: 20
+  },
+  datePickerWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    maxHeight: 50
+  },
+  datePickerModal: {
+    flex: 1,
+    marginRight: 253,
+    maxHeight: 50
+  },
+  notesLabel: {
+    marginLeft: 15,
+    fontSize: 17,
+    marginTop: 20,
+    fontWeight: 'bold'
+  },
+  notesInput: { backgroundColor: 'white', height: 60 },
+  locationTitleWrapper: { flex: 1, flexDirection: 'row', maxHeight: 50 },
+  locationTitle: { margin: 15, fontSize: 17, fontWeight: 'bold' },
+  checkBoxWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 15,
+    maxHeight: 50
+  }
+})

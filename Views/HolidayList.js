@@ -1,25 +1,18 @@
-import { View, Text, SafeAreaView, StyleSheet, FlatList, ActivityIndicator } from 'react-native'
-import React, { useEffect, useId, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { styleConstants } from '../constants/style-const'
-import AppBar from '../components/AppBar'
-import axios from 'axios'
-import { setHolidays } from '../redux/reducers/holidays'
-import dummyJson from '../holidays.json'
-import { prepareSixMonthHolidays } from '../utils/prepare-holidays'
-import LoadingSpinner from '../components/LoadingSpinner'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
+import React, { useId } from 'react'
+import { useSelector } from 'react-redux'
 import HolidayCard from '../components/HolidayCard'
 
-// TODO Filter holidays for 5 and get the using dayJS
 export default function HolidayList () {
   const holidayId = useId()
-  const dispatch = useDispatch()
   const holidays = useSelector((root) => root.holidays.data)
+
+  const renderSorryMessage = !holidays || holidays.length === 0
 
   return (
     <View style={styles.container}>
-      {!holidays &&
-        <Text style={{ fontSize: 20, textAlign: 'center', marginTop: 30 }}>
+      {renderSorryMessage &&
+        <Text style={styles.textStyles}>
           Sorry no holidays to display
         </Text>}
       <FlatList
@@ -42,5 +35,8 @@ const styles = StyleSheet.create({
     height: '100%',
     minWidth: '100%',
     overflow: 'scroll'
+  },
+  textStyles: {
+    fontSize: 15, textAlign: 'center', marginTop: 30
   }
 })
