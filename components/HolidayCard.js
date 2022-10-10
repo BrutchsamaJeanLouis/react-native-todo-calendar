@@ -47,7 +47,7 @@ const HolidayCard = ({ holiday, index }) => {
           subtitle={holiday.countries.toString()}
           left={(props) => (
             <View>
-              <Text style={styles.titleStyles}>{day} {month}</Text>
+              <Text style={styles.leftStyles}>{day} {month}</Text>
             </View>
           )}
           right={(props) => {
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic'
   },
   leftStyles: {
+    fontWeight: 'bold',
     width: 60,
     justifyContent: 'flex-start'
   },
